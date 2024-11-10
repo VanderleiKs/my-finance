@@ -1,8 +1,9 @@
-import Image from "next/image";
-import { Button } from "./_components/ui/button";
-
+import LogoutButton from "./_components/ui/Button-sair";
 export default function Home() {
   return (
-  <></>
+    <>
+      <h1>Home</h1>
+      <LogoutButton />
+    </>
   );
 }

@@ -5,7 +5,7 @@ import TransactionTypeBadge from '../_components/type-badge'
 import {
     TRANSACTION_CATEGORY_LABELS,
     TRANSACTION_PAYMENT_METHOD_LABELS,
-} from '../../_constants/transaction'
+} from '../../../_constants/transaction'
 import { EditTransactionButton } from '../_components/edit-transaction-button'
 import { DeleteTransactionButton } from '../_components/delete-transaction-button'
 

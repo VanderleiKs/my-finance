@@ -1,8 +1,8 @@
-import { DataTable } from '../_components/ui/data-table'
-import { db } from '../_lib/prisma'
+import { DataTable } from '../../_components/ui/data-table'
+import { db } from '../../_lib/prisma'
 import { transactionsColumns } from './_columns'
 import { Transaction } from '@prisma/client'
-import { AddTransactionButton } from '../_components/ui/add-transaction-button'
+import { AddTransactionButton } from '../../_components/ui/add-transaction-button'
 
 export default async function TransactionPage() {
     const transactions: Transaction[] = await db.transaction.findMany({})

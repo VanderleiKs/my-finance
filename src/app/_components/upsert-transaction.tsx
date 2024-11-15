@@ -8,7 +8,6 @@ import {
     DialogFooter,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from '@/app/_components/ui/dialog'
 import { Input } from '@/app/_components/ui/input'
 import {
@@ -16,7 +15,6 @@ import {
     TransactionPaymentMethod,
     TransactionType,
 } from '@prisma/client'
-import { ArrowDownUpIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -43,7 +41,6 @@ import {
 import { DatePicker } from './ui/date-picker'
 import MoneyInput from './ui/maney-input'
 import { addTransaction } from '../_actions/add-transaction'
-import { useState } from 'react'
 
 const formSchema = z.object({
     name: z.string().trim().min(1, {
@@ -68,11 +65,22 @@ const formSchema = z.object({
 
 type FormType = z.infer<typeof formSchema>
 
-export function AddTransaction() {
-    const [isOpen, setIsOpen] = useState(false)
+interface UpsertTransactionProps {
+    isOpen: boolean
+    setIsOpen: (isOpen: boolean) => void
+    transaction?: FormType
+    transactionId?: string
+}
+
+export function UpsertTransaction({
+    isOpen,
+    setIsOpen,
+    transaction,
+    transactionId,
+}: UpsertTransactionProps) {
     const form = useForm<FormType>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
+        defaultValues: transaction ?? {
             name: '',
             amount: 0,
             category: TransactionCategory.OTHER,
@@ -84,7 +92,7 @@ export function AddTransaction() {
 
     function handleOnsubmit(formSubmit: FormType) {
         try {
-            addTransaction(formSubmit)
+            addTransaction({ ...formSubmit, id: transactionId })
             setIsOpen(false)
             form.reset()
         } catch {
@@ -100,14 +108,7 @@ export function AddTransaction() {
                 if (!open) {
                     form.reset()
                 }
-            }}
-        >
-            <DialogTrigger asChild>
-                <Button className="rounded-full font-bold">
-                    {' '}
-                    Adicionar transação <ArrowDownUpIcon />
-                </Button>
-            </DialogTrigger>
+            }}>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle className="flex justify-center text-2xl">
@@ -120,8 +121,7 @@ export function AddTransaction() {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(handleOnsubmit)}
-                        className="space-y-8"
-                    >
+                        className="space-y-8">
                         <FormField
                             control={form.control}
                             name="name"
@@ -164,8 +164,7 @@ export function AddTransaction() {
                                     <FormLabel>Tipo</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                    >
+                                        defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Selecione o tipo da transação" />
@@ -177,8 +176,7 @@ export function AddTransaction() {
                                                     return (
                                                         <SelectItem
                                                             key={t.value}
-                                                            value={t.value}
-                                                        >
+                                                            value={t.value}>
                                                             {t.label}
                                                         </SelectItem>
                                                     )
@@ -198,8 +196,7 @@ export function AddTransaction() {
                                     <FormLabel>Categoria</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                    >
+                                        defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Selecione a categoria da transação" />
@@ -210,8 +207,7 @@ export function AddTransaction() {
                                                 return (
                                                     <SelectItem
                                                         key={c.value}
-                                                        value={c.value}
-                                                    >
+                                                        value={c.value}>
                                                         {c.label}
                                                     </SelectItem>
                                                 )
@@ -230,8 +226,7 @@ export function AddTransaction() {
                                     <FormLabel>Metódo de pagamento</FormLabel>
                                     <Select
                                         onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                    >
+                                        defaultValue={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Selecione o método da pagamento" />
@@ -242,8 +237,7 @@ export function AddTransaction() {
                                                 return (
                                                     <SelectItem
                                                         key={p.value}
-                                                        value={p.value}
-                                                    >
+                                                        value={p.value}>
                                                         {p.label}
                                                     </SelectItem>
                                                 )

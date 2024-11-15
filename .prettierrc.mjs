@@ -9,6 +9,10 @@ const config = {
     tabWidth: 4,
     semi: false,
     singleQuote: true,
+    maxLineLenght: 200,
+    //evita '>' ficar em outra linha
+    bracketSameLine: true,
+
   };
   
   export default config;

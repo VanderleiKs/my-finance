@@ -17,7 +17,7 @@ model Transaction {
   id            String                   @id @default(uuid())
   name          String
   type          TransactionType
-  amount        Decimal                  @db.Decimal(10, 2)
+  amount        Float                  @db.DoublePrecision()
   category      TransactionCategory
   paymentMethod TransactionPaymentMethod
   date          DateTime

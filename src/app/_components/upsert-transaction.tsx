@@ -40,7 +40,7 @@ import {
 } from '../_constants/transaction'
 import { DatePicker } from './ui/date-picker'
 import MoneyInput from './ui/maney-input'
-import { addTransaction } from '../_actions/add-transaction'
+import { upsertTransaction } from '../_actions/upsert-transaction'
 
 const formSchema = z.object({
     name: z.string().trim().min(1, {
@@ -92,7 +92,7 @@ export function UpsertTransaction({
 
     function handleOnsubmit(formSubmit: FormType) {
         try {
-            addTransaction({ ...formSubmit, id: transactionId })
+            upsertTransaction({ ...formSubmit, id: transactionId })
             setIsOpen(false)
             form.reset()
         } catch {

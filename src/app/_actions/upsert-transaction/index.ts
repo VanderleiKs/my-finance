@@ -19,7 +19,7 @@ export type Transaction = {
     date: Date
 }
 
-export async function addTransaction(transaction: Transaction) {
+export async function upsertTransaction(transaction: Transaction) {
     const { userId } = await auth()
     addTransactionSchema.parse(transaction)
 

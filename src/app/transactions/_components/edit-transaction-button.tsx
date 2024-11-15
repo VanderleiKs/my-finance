@@ -19,7 +19,7 @@ export function EditTransactionButton({ transaction }: Props) {
                 variant="ghost"
                 className="text-muted-foreground"
                 onClick={() => setIsOpen(true)}>
-                <PencilIcon size="icon" />
+                <PencilIcon />
             </Button>
             <UpsertTransaction
                 isOpen={isOpen}

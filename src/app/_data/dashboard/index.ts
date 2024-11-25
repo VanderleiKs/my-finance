@@ -1,12 +1,19 @@
 import { db } from '@/app/_lib/prisma'
 import { auth } from '@clerk/nextjs/server'
-import { TransactionType } from '@prisma/client'
+import { TransactionCategory, TransactionType } from '@prisma/client'
+
+export interface ExpensesTotalPerCategory {
+    category: TransactionCategory
+    totalAmount: number
+    percentageTotal: number
+}
 
 interface DashboardData {
     depositTotal: number
     investmentTotal: number
     expensesTotal: number
     balance: number
+    expenseTotalPerCategory: ExpensesTotalPerCategory[]
 }
 
 export async function dashboardData(month: string): Promise<DashboardData> {
@@ -47,7 +54,30 @@ export async function dashboardData(month: string): Promise<DashboardData> {
         )._sum.amount,
     )
 
+    const expenseTotalPerCategory: ExpensesTotalPerCategory[] = (
+        await db.transaction.groupBy({
+            by: 'category',
+            where: {
+                ...where,
+                type: TransactionType.EXPENSE,
+            },
+            _sum: { amount: true },
+        })
+    ).map((cat) => ({
+        category: cat.category,
+        totalAmount: Number(cat._sum.amount),
+        percentageTotal: Math.round(
+            (Number(cat._sum.amount) / expensesTotal) * 100,
+        ),
+    }))
+
     const balance = depositTotal - investmentTotal - expensesTotal
 
-    return { depositTotal, investmentTotal, expensesTotal, balance }
+    return {
+        depositTotal,
+        investmentTotal,
+        expensesTotal,
+        balance,
+        expenseTotalPerCategory,
+    }
 }

@@ -22,7 +22,7 @@ export default function PrivateLayout({
 }>) {
     return (
         <ClerkProvider appearance={{ baseTheme: dark }}>
-            <html lang="en">
+            <html lang="pt-BR">
                 <body className={`${mulish.className} antialiased dark`}>
                     <Navbar />
                     {children}

@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import { SummaryCard } from './summary-card'
 
-interface DashboardData {
+export interface DashboardData {
     depositTotal: number
     investmentTotal: number
     expensesTotal: number
@@ -15,7 +15,7 @@ interface DashboardData {
 
 export function SummaryCards(data: DashboardData) {
     return (
-        <div className="grid grid-cols-3">
+        <div>
             <div className="grid-flow-row grid-cols-2 col-span-2 space-y-6">
                 <SummaryCard
                     amount={data.balance}
@@ -23,7 +23,7 @@ export function SummaryCards(data: DashboardData) {
                     size="large"
                     title="Saldo"
                 />
-                <div className="grid grid-cols-3">
+                <div className="grid grid-cols-3 gap-3">
                     <SummaryCard
                         amount={data.investmentTotal}
                         icon={<PiggyBankIcon />}

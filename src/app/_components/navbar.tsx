@@ -43,6 +43,15 @@ export default function Navbar() {
                     }>
                     Subscription
                 </Link>
+                <Link
+                    href="/investiments"
+                    className={
+                        pathname === '/investiments'
+                            ? 'font-bold text-primary'
+                            : 'text-muted-foreground'
+                    }>
+                    investiments
+                </Link>
             </div>
             <LogoutButton />
         </nav>

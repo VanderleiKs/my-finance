@@ -7,12 +7,13 @@ import ExpensePerCategory from './_components/expense-per-category'
 import Lastransactions from './_components/last-transactions'
 
 interface SearchParams {
-    searchParams: {
+    searchParams: Promise<{
         month?: string
-    }
+    }>
 }
 
-export default async function Home({ searchParams }: SearchParams) {
+export default async function Home(props: SearchParams) {
+    const searchParams = await props.searchParams
     const monthAtr =
         searchParams.month && isMatch(searchParams.month, 'MM')
             ? searchParams.month

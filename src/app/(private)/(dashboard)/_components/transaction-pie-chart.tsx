@@ -12,7 +12,7 @@ import {
 } from '@/app/_components/ui/chart'
 import { DashboardData } from './summary-cards'
 import { TransactionType } from '@prisma/client'
-import { formatCurrency } from '@/app/functions/format-currency'
+import { formatCurrency } from '@/app/_utils/format-currency'
 import {
     NameType,
     ValueType,
@@ -60,8 +60,8 @@ export function TransactionPieChart(props: DashboardData) {
     }
 
     return (
-        <Card className="flex flex-col">
-            <CardContent className="flex-1 pb-0">
+        <Card className="flex flex-col p-6">
+            <CardContent className="pb-0">
                 <ChartContainer
                     config={chartConfig}
                     className="mx-auto aspect-square max-h-[250px]">

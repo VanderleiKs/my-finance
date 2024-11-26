@@ -24,8 +24,10 @@ export default function PrivateLayout({
         <ClerkProvider appearance={{ baseTheme: dark }}>
             <html lang="pt-BR">
                 <body className={`${mulish.className} antialiased dark`}>
-                    <Navbar />
-                    {children}
+                    <div className="flex flex-col h-full overflow-hidden">
+                        <Navbar />
+                        {children}
+                    </div>
                 </body>
             </html>
         </ClerkProvider>

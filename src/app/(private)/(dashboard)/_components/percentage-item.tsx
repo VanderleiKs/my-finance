@@ -12,8 +12,10 @@ export default function PercentageItem({
 }: PercentageProps) {
     return (
         <div className="w-full flex justify-between items-center text-xs">
-            <span className="flex gap-1">
-                {icon}
+            <span className="flex items-center gap-2">
+                <div className="bg-white bg-opacity-[3%] rounded-lg p-2">
+                    {icon}
+                </div>
                 {title}
             </span>
             <span>{percentage}%</span>

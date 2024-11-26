@@ -6,7 +6,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/app/_components/ui/select'
-import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
@@ -27,7 +26,6 @@ const months = [
 
 export default function SelectMonth(props: { defaultValue: string }) {
     const router = useRouter()
-    console.log(format(new Date(), 'MM'))
 
     useEffect(() => {
         // Chama a navegação uma vez que o componente tenha sido montado

@@ -1,6 +1,10 @@
 import { db } from '@/app/_lib/prisma'
 import { auth } from '@clerk/nextjs/server'
-import { TransactionCategory, TransactionType } from '@prisma/client'
+import {
+    Transaction,
+    TransactionCategory,
+    TransactionType,
+} from '@prisma/client'
 
 export interface ExpensesTotalPerCategory {
     category: TransactionCategory
@@ -14,6 +18,7 @@ interface DashboardData {
     expensesTotal: number
     balance: number
     expenseTotalPerCategory: ExpensesTotalPerCategory[]
+    lastTransactions: Transaction[]
 }
 
 export async function dashboardData(month: string): Promise<DashboardData> {
@@ -71,6 +76,14 @@ export async function dashboardData(month: string): Promise<DashboardData> {
         ),
     }))
 
+    const lastTransactions: Transaction[] = await db.transaction.findMany({
+        where: {
+            ...where,
+        },
+        orderBy: { createAt: 'desc' },
+        take: 15,
+    })
+
     const balance = depositTotal - investmentTotal - expensesTotal
 
     return {
@@ -79,5 +92,6 @@ export async function dashboardData(month: string): Promise<DashboardData> {
         expensesTotal,
         balance,
         expenseTotalPerCategory,
+        lastTransactions,
     }
 }
